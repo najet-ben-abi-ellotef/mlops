@@ -1,4 +1,5 @@
 
+
 # ===== 1. Importer les bibliothèques =====
 import pandas as pd
 import mlflow
@@ -13,7 +14,8 @@ from sklearn.metrics import (
     f1_score
 )
 
-
+# Connexion au serveur MLflow Docker
+mlflow.set_tracking_uri("http://localhost:5000")
 # ===== 2. Charger les données =====
 df = pd.read_csv("churn_data.csv")
 

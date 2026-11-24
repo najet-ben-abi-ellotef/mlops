@@ -3,8 +3,8 @@
 import mlflow
 from mlflow import MlflowClient
 
-# ===== 2. Se connecter à la même base que le TP3 =====
-mlflow.set_tracking_uri("sqlite:///mlflow.db")
+# ===== 2. Connexion au serveur MLflow Docker =====
+mlflow.set_tracking_uri("http://localhost:5000")
 
 # ===== 3. Retrouver le meilleur run =====
 runs = mlflow.search_runs(
@@ -15,13 +15,8 @@ runs = mlflow.search_runs(
 best = runs.iloc[0]
 run_id = best["run_id"]
 
-print(
-    "Meilleur run :",
-    best["tags.mlflow.runName"],
-    "| id :",
-    run_id[:8],
-    "..."
-)
+print("Meilleur run :", best["tags.mlflow.runName"])
+print("Run ID :", run_id)
 
 # ===== 4. Enregistrer le modèle dans le Registry =====
 result = mlflow.register_model(
@@ -29,7 +24,7 @@ result = mlflow.register_model(
     "churn-model"
 )
 
-print("Modèle enregistré : churn-model | version", result.version)
+print("Modèle enregistré :", result.version)
 
 # ===== 5. Attribuer l'alias champion =====
 client = MlflowClient()
@@ -40,4 +35,4 @@ client.set_registered_model_alias(
     result.version
 )
 
-print("Alias 'champion' -> version", result.version)
+print("Alias champion -> version", result.version)

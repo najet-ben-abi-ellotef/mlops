@@ -1,6 +1,6 @@
 import requests  # Envoyer des requêtes HTTP depuis Python
 
-URL = "http://localhost:8000"  # Adresse de notre API
+URL = "http://localhost:8002"  # Adresse de notre API
 
 # 1. L'API est-elle en vie ?
 print("GET /health ->", requests.get(URL + "/health").json())
@@ -30,7 +30,7 @@ r = requests.post(URL + "/predict", json=client2)
 print("POST /predict (client 2) ->", r.status_code, r.json())
 
 # 4. Une erreur volontaire : l'âge est du texte
-mauvais = dict(client, age="abc")
+mauvais = dict(client, age='abc')
 
 r = requests.post(URL + "/predict", json=mauvais)
 print("POST /predict (age='abc') ->", r.status_code)
